@@ -62,7 +62,7 @@ function GeneratorForm() {
         console.log(`${key}: ${value}`);
       }
       console.log(programFiles);
-      const response = await axios.post("http://localhost:8080/api/documents/generate",
+      const response = await axios.post("https://documents-generator-backend.onrender.com/api/documents/generate",
         formData,
         {
           headers: {
