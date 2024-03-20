@@ -1,0 +1,222 @@
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  color: #384047;
+}
+
+form {
+  max-width: 300px;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background: #f4f7f8;
+  border-radius: 8px;
+}
+
+h1,
+h3 {
+  margin: 0 0 30px 0;
+  text-align: center;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  font-family: 'Nunito', sans-serif;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  font-size: 18px;
+  height: auto;
+  border-radius: 8px;
+  padding: 15px;
+  width: 100%;
+  background-color: #e8eeef;
+  color: #070707;
+  margin-bottom: 30px;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+  outline: 3px solid rgb(140, 177, 212);
+}
+
+textarea
+{
+   resize: vertical;
+}
+
+button {
+  font-family: 'Nunito', sans-serif;
+  padding: 19px 39px 18px 39px;
+  color: #FFF;
+  background-color: rgb(140, 177, 212);
+  font-size: 20px;
+  text-align: center;
+  font-style: normal;
+  border-radius: 8px;
+  width: 100%;
+  border: none;
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: rgb(120, 157, 192);
+}
+
+button:active {
+  background-color: rgb(100, 137, 172);
+}
+
+.author {
+  width: 40%;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  display: block;
+}
+
+.files {
+  width: 40%;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.file {
+  font-size: 18px;
+  color: rgb(100, 137, 172);
+}
+
+fieldset {
+  margin-bottom: 30px;
+  border: none;
+}
+
+legend {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+label.light {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+
+label {
+  display: inline;
+  font-size: 18px;
+}
+
+ul {
+  align-content: center;
+}
+
+.number {
+  background-color: rgb(140, 177, 212);
+  color: #fff;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  font-size: 0.8em;
+  margin-right: 4px;
+  line-height: 30px;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-radius: 100%;
+}
+
+@media screen and (min-width: 480px) {
+
+  form {
+    max-width: 800px;
+  }
+}
+
+
+.item {
+  position: relative;
+}
+
+.item:after {
+  content: attr(data-title);
+  position: absolute;
+  top: -40px;
+  left: 40px;
+  width: 500px;
+  background: rgb(140, 177, 212);
+  border-radius: 30px;
+  padding: 14px 20px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: 0.34s linear;
+  color: #fff;
+  box-shadow: 0 5px 12px #ccc;
+  pointer-events: none;
+}
+
+.item:hover:after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.p-datepicker {
+  background-color: rgb(140, 177, 212);
+  color: #FFF;
+  border-radius: 8px;
+  padding-bottom: 10px;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-month,
+.p-datepicker .p-datepicker-header .p-datepicker-year,
+.p-datepicker .p-datepicker-header button {
+  height: 60px;
+  width: 150px;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-prev,
+.p-datepicker .p-datepicker-header .p-datepicker-next {
+  height: 60px;
+  width: 90px;
+}
+
+.p-datepicker .p-datepicker-calendar td span:hover {
+  background-color: rgb(120, 157, 192);
+  height: 50px;
+  width: 50px;
+}
+
+.p-datepicker .p-datepicker-calendar td span{
+  transition: background-color 0.3s ease;
+  height: 50px;
+  width: 50px;
+  border-radius: 8px;
+}
+
+.p-datepicker .p-datepicker-calendar td span:active {
+  background-color: rgb(100, 137, 172); 
+  height: 50px;
+  width: 50px;
+}
+
+.p-monthpicker .p-monthpicker-month {
+  height: 80px;
+  width: 80px;
+}
+
+.p-yearpicker .p-yearpicker-year {
+  height: 90px;
+  width: 90px;
+}
