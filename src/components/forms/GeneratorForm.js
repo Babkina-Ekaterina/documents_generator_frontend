@@ -58,10 +58,6 @@ function GeneratorForm() {
         formData.append("programFiles", programFile);
       });
 
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-      console.log(programFiles);
       const response = await axios.post("https://documents-generator-backend.onrender.com/api/documents/generate",
         formData,
         {
@@ -87,7 +83,7 @@ function GeneratorForm() {
     }
   };
 
-
+  
   const addAuthor = () => {
     setAuthors([...authors, {
       name: "", address: "",
