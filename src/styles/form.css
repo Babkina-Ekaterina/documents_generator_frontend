@@ -78,6 +78,10 @@ button:active {
   background-color: rgb(100, 137, 172);
 }
 
+button:disabled {
+  background-color: #384047;
+}
+
 .author {
   width: 70%;
   margin: 0 auto;

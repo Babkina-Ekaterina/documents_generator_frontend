@@ -30,8 +30,12 @@ function GeneratorForm() {
     dateOfBirth: "", issuedBy: "", description: "", selectedNameOption: "name"
   }]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const save = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
+    document.body.style.cursor = 'wait';
     try {
       const formData = new FormData();
       formData.append('userDataDto', JSON.stringify({
@@ -80,6 +84,9 @@ function GeneratorForm() {
       window.URL.revokeObjectURL(url);
     } catch (err) {
       alert("В ходе генерации возникла ошибка.");
+    } finally {
+      document.body.style.cursor = 'default';
+      setIsLoading(false);
     }
   };
 
@@ -181,7 +188,7 @@ function GeneratorForm() {
           <Reason reason={reason} onChange={handleReasonChange} />
         </fieldset>
 
-        <button type="submit">Сгенерировать документы</button>
+        <button disabled={isLoading} type="submit">Сгенерировать документы</button>
       </form>
     </div>
   );
