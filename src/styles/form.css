@@ -181,19 +181,22 @@ ul {
   color: #FFF;
   border-radius: 8px;
   padding-bottom: 10px;
+  max-width: 390px;
 }
 
 .p-datepicker .p-datepicker-header .p-datepicker-month,
 .p-datepicker .p-datepicker-header .p-datepicker-year,
 .p-datepicker .p-datepicker-header button {
   height: 60px;
-  width: 150px;
+  width: 120px;
+  padding: 0;
 }
 
 .p-datepicker .p-datepicker-header .p-datepicker-prev,
 .p-datepicker .p-datepicker-header .p-datepicker-next {
   height: 60px;
-  width: 90px;
+  width: 60px;
+  padding: 0;
 }
 
 .p-datepicker .p-datepicker-calendar td span:hover {
@@ -215,12 +218,68 @@ ul {
   width: 50px;
 }
 
+.p-monthpicker .p-monthpicker-month:hover {
+  background-color: rgb(120, 157, 192);
+  height: 72px;
+  width: 72px;
+}
+
 .p-monthpicker .p-monthpicker-month {
-  height: 80px;
-  width: 80px;
+  transition: background-color 0.3s ease;
+  height: 72px;
+  width: 72px;
+  border-radius: 8px;
+}
+
+.p-monthpicker .p-monthpicker-month:active {
+  background-color: rgb(100, 137, 172); 
+  height: 72px;
+  width: 72px;
+}
+
+.p-yearpicker .p-yearpicker-year:hover {
+  background-color: rgb(120, 157, 192);
+  height: 72px;
+  width: 72px;
 }
 
 .p-yearpicker .p-yearpicker-year {
-  height: 90px;
-  width: 90px;
+  transition: background-color 0.3s ease;
+  height: 72px;
+  width: 72px;
+  border-radius: 8px;
+}
+
+.p-yearpicker .p-yearpicker-year:active {
+  background-color: rgb(100, 137, 172); 
+  height: 72px;
+  width: 72px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  position: absolute;
+  top: -210px;
+  left: 40px;
+  width: 500px;
+  background: rgb(140, 177, 212);
+  border-radius: 30px;
+  padding: 14px 20px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: 0.34s linear;
+  color: #fff;
+  box-shadow: 0 5px 12px #ccc;
+  pointer-events: none;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
 }

@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useState } from "react";
 import ProgramName from '../inputs/ProgramName';
 import Annotation from '../inputs/Annotation';
-import Implement from '../inputs/Implement';
 import Language from '../inputs/Language';
 import ProgramSize from '../inputs/ProgramSize';
 import Faculty from '../inputs/Faculty';
@@ -15,7 +14,6 @@ import ProgramFiles from '../inputs/ProgramFiles';
 function GeneratorForm() {
   const [programName, setProgramName] = useState("");
   const [annotation, setAnnotation] = useState("");
-  const [implement, setImplement] = useState("");
   const [language, setLanguage] = useState("");
   const [programSize, setProgramSize] = useState("");
   const [selectedOption, setSelectedOption] = useState("computerProgram");
@@ -39,7 +37,7 @@ function GeneratorForm() {
     try {
       const formData = new FormData();
       formData.append('userDataDto', JSON.stringify({
-        programName, annotation, implement, language, programSize,
+        programName, annotation, language, programSize,
         names: authors.map(author => author.name),
         addresses: authors.map(author => author.address),
         series: authors.map(author => author.series),
@@ -58,19 +56,47 @@ function GeneratorForm() {
         faculty, fullAuthors, reason
       }));
 
+      let totalSize = 0;
+      programFiles.forEach(programFile => {
+        totalSize += programFile.size;
+      });
+
+      const MAX_FILE_SIZE = 10485760;
+
+      if (totalSize > MAX_FILE_SIZE) {
+        alert("Общий объем файлов превышает максимально допустимый размер.\nРазделите файлы программы на 2 или более частей." +
+          " Выбирая папку, относящуюся к каждой части, повторите генерацию несколько раз. Затем Вы можете совместить несколько листингов в один." +
+          "\nВы также можете не выбирать полновесные папки.");
+        setIsLoading(false);
+        return;
+      }
+
       programFiles.forEach(programFile => {
         formData.append("programFiles", programFile);
       });
 
-      const response = await axios.post("https://documents-generator-backend.onrender.com/api/documents/generate",
+      /*       const response = await axios.post("https://documents-generator-backend.onrender.com/api/documents/generate",
+              formData,
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data"
+                },
+                auth: {
+                  username: process.env.REACT_APP_USERNAME,
+                  password: process.env.REACT_APP_PASSWORD
+                },
+                responseType: 'blob'
+              }); */
+
+      const response = await axios.post("http://localhost:8080/api/documents/generate",
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data"
           },
           auth: {
-            username: process.env.REACT_APP_USERNAME,
-            password: process.env.REACT_APP_PASSWORD
+            username: "user",
+            password: "123"
           },
           responseType: 'blob'
         });
@@ -90,7 +116,7 @@ function GeneratorForm() {
     }
   };
 
-  
+
   const addAuthor = () => {
     setAuthors([...authors, {
       name: "", address: "",
@@ -116,9 +142,6 @@ function GeneratorForm() {
   };
   const handleAnnotationChange = (event) => {
     setAnnotation(event.target.value);
-  };
-  const handleImplementChange = (event) => {
-    setImplement(event.target.value);
   };
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
@@ -147,20 +170,30 @@ function GeneratorForm() {
     <div>
       <form onSubmit={save}>
 
-        <h1> Генерация документов для отдела защиты интеллектуальной собственности ВГУ </h1>
+        <h1>Генерация документов для отдела защиты интеллектуальной собственности ВГУ</h1>
 
         <h3>Данный генератор документов призван устранить ручное заполнение документов, снизить вероятность ошибок,
-          ускорить процесс согласования документов и улучшить общую эффективность отдела защиты интеллектуальной собственности</h3>
-        <h3>С помощью данного генератора можно получить следующие документы: листинг, реферат, согласие на обработку
-          персональных данных, согласие на использование сведений об авторе, указанных в заявлении, обоснование рекомендации от факультета</h3>
+          ускорить процесс согласования документов и улучшить общую эффективность отдела защиты интеллектуальной собственности.</h3>
+        <h3>С помощью данного генератора можно получить следующие документы:
+          <div style={{ textAlign: 'center' }}>
+
+            <div className="file">&#8226; Листинг;</div>
+            <div className="file">&#8226; Реферат;</div>
+            <div className="file">&#8226; Согласие на обработку персональных данных;</div>
+            <div className="file">&#8226; Согласие на указание сведений об авторе в заявлении 
+            на государственную регистрацию программы для ЭВМ или базы данных;</div>
+            <div className="file">&#8226; Обоснование рекомендации от факультета;</div>
+            <div className="file">&#8226; Памятка авторам с перечнем необходимых документов.</div>
+
+          </div></h3>
+
         <h3>Для получения всех необходимых документов внимательно заполните каждое поле формы.
-          Во избежание трудностей следуйте инструкциям и обращайте внимание на примеры заполнения полей</h3>
+          Во избежание трудностей следуйте инструкциям и обращайте внимание на примеры заполнения полей.</h3>
 
         <fieldset>
           <legend><span className="number">1</span> Информация о проекте</legend>
           <ProgramName programName={programName} onChange={handleProgramNameChange} />
           <Annotation annotation={annotation} onChange={handleAnnotationChange} />
-          <Implement implement={implement} onChange={handleImplementChange} />
           <Language language={language} onChange={handleLanguageChange} />
           <ProgramSize programSize={programSize} onChange={handleProgramSizeChange} />
           <ProgramFiles onFilesSelect={handleFilesSelect} />
