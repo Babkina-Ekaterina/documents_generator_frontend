@@ -75,31 +75,19 @@ function GeneratorForm() {
         formData.append("programFiles", programFile);
       });
 
-      /*       const response = await axios.post("https://documents-generator-backend.onrender.com/api/documents/generate",
-              formData,
-              {
-                headers: {
-                  "Content-Type": "multipart/form-data"
-                },
-                auth: {
-                  username: process.env.REACT_APP_USERNAME,
-                  password: process.env.REACT_APP_PASSWORD
-                },
-                responseType: 'blob'
-              }); */
-
-      const response = await axios.post("http://localhost:8080/api/documents/generate",
+      const response = await axios.post("https://documents-generator-backend.onrender.com/api/documents/generate",
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data"
           },
           auth: {
-            username: "user",
-            password: "123"
+            username: process.env.REACT_APP_USERNAME,
+            password: process.env.REACT_APP_PASSWORD
           },
           responseType: 'blob'
         });
+
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
@@ -180,8 +168,8 @@ function GeneratorForm() {
             <div className="file">&#8226; Листинг;</div>
             <div className="file">&#8226; Реферат;</div>
             <div className="file">&#8226; Согласие на обработку персональных данных;</div>
-            <div className="file">&#8226; Согласие на указание сведений об авторе в заявлении 
-            на государственную регистрацию программы для ЭВМ или базы данных;</div>
+            <div className="file">&#8226; Согласие на указание сведений об авторе в заявлении
+              на государственную регистрацию программы для ЭВМ или базы данных;</div>
             <div className="file">&#8226; Обоснование рекомендации от факультета;</div>
             <div className="file">&#8226; Памятка авторам с перечнем необходимых документов.</div>
 
