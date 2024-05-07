@@ -2,18 +2,20 @@ import React from 'react';
 
 function Address({ index, address, onChange }) {
   return (
-    <div key={index} className="item" data-title="Пример: Россия, (Ru), 395042, г. Воронеж, ул. Ленина, д. 100, кв. 9">
+    <div key={index}>
       <label className="light">Введите адрес места жительства автора:
-        страна, (аббревиатура страны), почтовый индекс, населенный пункт, улица, дом, квартира</label>
-      <textarea
-        required
-        type="text"
-        name="address"
-        value={address}
-        onChange={onChange}
-        placeholder="Адрес"
-        maxLength={120}
-      />
+        почтовый индекс, страна, (аббревиатура страны), населенный пункт, улица, дом, квартира</label>
+      <div className="item" data-title="Пример: 395042, Российская Федерация (RU), г. Воронеж, ул. Ленина, д.100, кв.9">
+        <textarea
+          required
+          type="text"
+          name="address"
+          value={address}
+          onChange={onChange}
+          placeholder="Адрес"
+          maxLength={120}
+        />
+      </div>
     </div>
   );
 }

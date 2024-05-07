@@ -2,8 +2,9 @@ import React from 'react';
 
 function ProgramSize({ programSize, onChange }) {
     return (
-        <div className="item" data-title="Пример: 400 Кб">
+        <div>
             <label className="light">Введите объем программы с указанием единицы измерения объема информации</label>
+            <div className="item" data-title="Пример: 400 Кб">
             <input
                 required
                 type="text"
@@ -12,6 +13,7 @@ function ProgramSize({ programSize, onChange }) {
                 placeholder="Объем программы"
                 maxLength={20}
             />
+            </div>
         </div>
     );
 }

@@ -9,18 +9,20 @@ function Number({ index, number, onChange }) {
     };
 
     return (
-        <div key={index} className="item" data-title="Пример: 010203">
+        <div key={index}>
             <label className="light">Введите номер паспорта автора</label>
-            <input
-                required
-                type="text"
-                name="number"
-                value={number}
-                onChange={handleChange}
-                placeholder="Номер паспорта"
-                minLength={6}
-                maxLength={6}
-            />
+            <div className="item" data-title="Пример: 010203">
+                <input
+                    required
+                    type="text"
+                    name="number"
+                    value={number}
+                    onChange={handleChange}
+                    placeholder="Номер паспорта"
+                    minLength={6}
+                    maxLength={6}
+                />
+            </div>
         </div>
     );
 }

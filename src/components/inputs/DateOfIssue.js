@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useState } from 'react';
 import { Calendar } from 'primereact/calendar';
 
 function DateOfIssue({ index, dateOfIssue, onChange }) {
@@ -23,17 +23,19 @@ function DateOfIssue({ index, dateOfIssue, onChange }) {
     };
 
     return (
-        <div key={index} className="item" data-title="Пример: 22.11.2019">
+        <div key={index}>
             <label className="light">Введите дату выдачи паспорта автора</label>
-            <Calendar
-                required
-                name="dateOfIssue"
-                value={selectedDate}
-                onChange={handleDateChange}
-                placeholder="Дата выдачи паспорта"
-                dateFormat="dd.mm.yy"
-                showOtherMonths={false}
-            />
+            <div className="item" data-title="Пример: 22.11.2019">
+                <Calendar
+                    required
+                    name="dateOfIssue"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    placeholder="Дата выдачи паспорта"
+                    dateFormat="dd.mm.yy"
+                    showOtherMonths={false}
+                />
+            </div>
         </div>
     );
 }

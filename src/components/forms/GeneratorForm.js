@@ -8,8 +8,9 @@ import Faculty from '../inputs/Faculty';
 import FullAuthors from '../inputs/FullAutors';
 import Reason from '../inputs/Reason';
 import ProgramType from '../inputs/ProgramType';
-import AuthorForm from './AuthorForm';
+import AuthorForm from '../fieldsets/AuthorFieldset';
 import ProgramFiles from '../inputs/ProgramFiles';
+import Format from '../inputs/Format';
 
 function GeneratorForm() {
   const [programName, setProgramName] = useState("");
@@ -20,6 +21,7 @@ function GeneratorForm() {
   const [faculty, setFaculty] = useState("");
   const [fullAuthors, setFullAuthors] = useState("");
   const [reason, setReason] = useState("");
+  const [format, setFormat] = useState("");
   const [programFiles, setProgramFiles] = useState([new File([], "empty_file.txt", { type: "text/plain" })]);
 
   const [authors, setAuthors] = useState([{
@@ -53,7 +55,7 @@ function GeneratorForm() {
         nameCheckboxes: authors.map(author => author.selectedNameOption === "name"),
         anonymousCheckboxes: authors.map(author => author.selectedNameOption === "anonymous"),
         pseudoNameCheckboxes: authors.map(author => author.selectedNameOption === "pseudoName"),
-        faculty, fullAuthors, reason
+        faculty, fullAuthors, reason, format
       }));
 
       let totalSize = 0;
@@ -106,17 +108,24 @@ function GeneratorForm() {
 
 
   const addAuthor = () => {
-    setAuthors([...authors, {
-      name: "", address: "",
-      series: "", number: "", dateOfIssue: "", citizenship: "",
-      dateOfBirth: "", issuedBy: "", description: "", selectedNameOption: "name"
-    }]);
-  };
+    if (authors.length < 30) {
+      setAuthors([...authors, {
+        name: "", address: "",
+        series: "", number: "", dateOfIssue: "", citizenship: "",
+        dateOfBirth: "", issuedBy: "", description: "", selectedNameOption: "name"
+      }]);
+    } else {
+      alert("Достигнуто максимальное количество авторов.");
+    }
+  }
+
   const deleteAuthor = (index) => {
     if (authors.length > 1) {
       const newAuthors = [...authors];
-      newAuthors.splice(index, 1);
+      newAuthors.pop();
       setAuthors(newAuthors);
+    } else {
+      alert("Должен быть как минимум 1 автор.");
     }
   };
   const handleAuthorChange = (index, fieldName, value) => {
@@ -148,6 +157,9 @@ function GeneratorForm() {
   };
   const handleReasonChange = (event) => {
     setReason(event.target.value);
+  };
+  const handleFormatChange = (event) => {
+    setFormat(event.target.value);
   };
   const handleFilesSelect = (files) => {
     setProgramFiles(files);
@@ -207,6 +219,7 @@ function GeneratorForm() {
           <Faculty faculty={faculty} onChange={handleFacultyChange} />
           <FullAuthors fullAuthors={fullAuthors} onChange={handleFullAuthorsChange} />
           <Reason reason={reason} onChange={handleReasonChange} />
+          <Format format={format} onChange={handleFormatChange} />
         </fieldset>
 
         <button disabled={isLoading} type="submit">Сгенерировать документы</button>

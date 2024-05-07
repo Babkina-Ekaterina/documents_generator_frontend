@@ -9,18 +9,20 @@ function Series({ index, series, onChange }) {
     };
 
     return (
-        <div key={index} className="item" data-title="Пример: 2020">
+        <div key={index}>
             <label className="light">Введите серию паспорта автора</label>
-            <input
-                required
-                type="text"
-                name="series"
-                value={series}
-                onChange={handleChange}
-                placeholder="Серия паспорта"
-                minLength={4}
-                maxLength={4}
-            />
+            <div className="item" data-title="Пример: 2020">
+                <input
+                    required
+                    type="text"
+                    name="series"
+                    value={series}
+                    onChange={handleChange}
+                    placeholder="Серия паспорта"
+                    minLength={4}
+                    maxLength={4}
+                />
+            </div>
         </div>
     );
 }

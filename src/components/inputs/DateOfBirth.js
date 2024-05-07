@@ -24,17 +24,19 @@ function DateOfBirth({ index, dateOfBirth, onChange }) {
 
 
     return (
-        <div key={index} className="item" data-title="Пример: 11.05.1999">
+        <div key={index}>
             <label className="light">Введите дату рождения автора</label>
-            <Calendar
-                required
-                name="dateOfBirth"
-                value={selectedDate}
-                onChange={handleDateChange}
-                placeholder="Дата рождения"
-                dateFormat="dd.mm.yy"
-                showOtherMonths={false}
-            />
+            <div className="item" data-title="Пример: 11.05.1999">
+                <Calendar
+                    required
+                    name="dateOfBirth"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    placeholder="Дата рождения"
+                    dateFormat="dd.mm.yy"
+                    showOtherMonths={false}
+                />
+            </div>
         </div>
     );
 }

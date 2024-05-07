@@ -17,10 +17,10 @@ function ProgramFiles({ onFilesSelect }) {
   return (
     <div>
       <label className="light">Выберите основную папку с исходным кодом программы (src)</label>
-      <input 
-        type="file" 
+      <input
+        type="file"
         multiple
-        style={{display:'none'}}
+        style={{ display: 'none' }}
         ref={fileInputRef}
         onChange={handleFileChange}
         webkitdirectory=""
@@ -30,11 +30,11 @@ function ProgramFiles({ onFilesSelect }) {
       {selectedFiles.length > 0 && (
         <div style={{ textAlign: 'center' }}>
           <label>Выбранные файлы:</label>
-          
-            {selectedFiles.map((file, index) => (
-              <div className="file" key={index}>{file.name}</div>
-            ))}
-          
+
+          {selectedFiles.map((file, index) => (
+            <div className="file" key={index}>{file.name}</div>
+          ))}
+
         </div>
       )}
     </div>
