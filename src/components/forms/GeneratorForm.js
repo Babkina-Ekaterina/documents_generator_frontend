@@ -63,7 +63,7 @@ function GeneratorForm() {
         totalSize += programFile.size;
       });
 
-      const MAX_FILE_SIZE = 3e+7;
+      const MAX_FILE_SIZE = 5e+7;
 
       if (totalSize > MAX_FILE_SIZE) {
         alert("Общий объем файлов превышает максимально допустимый размер.\nРазделите файлы программы на 2 или более частей." +

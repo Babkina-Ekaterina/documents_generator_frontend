@@ -29,7 +29,8 @@ function ProgramFiles({ onFilesSelect }) {
 
   return (
     <div>
-      <label className="light">Выберите основные папки с исходным кодом программы (src). Выбирайте по одной папке за раз</label>
+      <label className="light">Выберите основные папки с исходным кодом программы (src).
+      Выбирайте по одной папке за раз. Общий объем файлов не должен превышать 50 Мбайт</label>
       <input
         type="file"
         multiple
