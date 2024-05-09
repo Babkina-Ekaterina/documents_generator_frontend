@@ -22,7 +22,7 @@ function GeneratorForm() {
   const [fullAuthors, setFullAuthors] = useState("");
   const [reason, setReason] = useState("");
   const [format, setFormat] = useState("");
-  const [programFiles, setProgramFiles] = useState([new File([], "empty_file.txt", { type: "text/plain" })]);
+  const [programFiles, setProgramFiles] = useState([]);
 
   const [authors, setAuthors] = useState([{
     name: "", address: "",
@@ -63,7 +63,7 @@ function GeneratorForm() {
         totalSize += programFile.size;
       });
 
-      const MAX_FILE_SIZE = 10485760;
+      const MAX_FILE_SIZE = 3e+7;
 
       if (totalSize > MAX_FILE_SIZE) {
         alert("Общий объем файлов превышает максимально допустимый размер.\nРазделите файлы программы на 2 или более частей." +
@@ -72,12 +72,16 @@ function GeneratorForm() {
         setIsLoading(false);
         return;
       }
+      
+      if (programFiles.length === 0) {
+        programFiles.push(new File([], "empty_file.txt", { type: "text/plain" }));
+      }
 
       programFiles.forEach(programFile => {
         formData.append("programFiles", programFile);
       });
 
-      const response = await axios.post("https://documents-generator-backend.onrender.com/api/documents/generate",
+      const response = await axios.post(process.env.REACT_APP_SERVER_URL,
         formData,
         {
           headers: {
@@ -94,10 +98,22 @@ function GeneratorForm() {
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute("download", "Документы.zip");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
+  
+      // Обработчик события для мобильных устройств
+      link.addEventListener('touchstart', () => {
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      });
+  
+      if ('ontouchstart' in window) {
+        link.innerText = 'Нажмите, чтобы скачать архив';
+      } else {
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
     } catch (err) {
       alert("В ходе генерации возникла ошибка.");
     } finally {
