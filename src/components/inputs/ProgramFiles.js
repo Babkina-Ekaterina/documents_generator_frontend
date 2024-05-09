@@ -6,17 +6,30 @@ function ProgramFiles({ onFilesSelect }) {
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
-    setSelectedFiles(files);
-    onFilesSelect(files);
+    onFilesSelect([...selectedFiles, ...files]);
+    setSelectedFiles(prevSelectedFiles => [...prevSelectedFiles, ...files]);
+  };
+
+  const handleClearButtonClick = () => {
+    setSelectedFiles([]);
+    onFilesSelect([]);
+  };
+
+  const handleFileDelete = (index) => {
+    const newFiles = [...selectedFiles];
+    newFiles.splice(index, 1);
+    setSelectedFiles(newFiles);
+    onFilesSelect(newFiles);
   };
 
   const handleButtonClick = () => {
+    fileInputRef.current.value = null;
     fileInputRef.current.click();
   };
 
   return (
     <div>
-      <label className="light">Выберите основную папку с исходным кодом программы (src)</label>
+      <label className="light">Выберите основные папки с исходным кодом программы (src). Выбирайте по одной папке за раз</label>
       <input
         type="file"
         multiple
@@ -26,13 +39,17 @@ function ProgramFiles({ onFilesSelect }) {
         webkitdirectory=""
         directory=""
       />
-      <button type="button" className="files" onClick={handleButtonClick}>Выбрать папку</button>
+      <button type="button" className="files" onClick={handleButtonClick}>Добавить папку</button>
+      <button type="button" className="files" onClick={handleClearButtonClick}>Удалить все файлы</button>
       {selectedFiles.length > 0 && (
         <div style={{ textAlign: 'center' }}>
           <label>Выбранные файлы:</label>
 
           {selectedFiles.map((file, index) => (
-            <div className="file" key={index}>{file.name}</div>
+            <div className="file" key={index}>
+              {file.name}
+              <button type="button" className="file_delete" onClick={() => handleFileDelete(index)}>X</button>
+              </div>
           ))}
 
         </div>

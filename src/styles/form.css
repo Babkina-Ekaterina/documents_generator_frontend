@@ -85,7 +85,7 @@ button:disabled {
 .author {
   width: 70%;
   margin: 0 auto;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   display: block;
 }
 
@@ -93,7 +93,16 @@ button:disabled {
   width: 70%;
   margin: 0 auto;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 15px;
+}
+
+.file_delete {
+  font-size: 18px;
+  padding: 0 5px;
+  height: auto;
+  width: auto;
+  margin: 1px 10px;
+  display: inline;
 }
 
 .file {
