@@ -94,26 +94,15 @@ function GeneratorForm() {
           responseType: 'blob'
         });
 
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute("download", "Документы.zip");
-  
-      // Обработчик события для мобильных устройств
-      link.addEventListener('touchstart', () => {
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-      });
-  
-      if ('ontouchstart' in window) {
-        link.innerText = 'Нажмите, чтобы скачать архив';
-      } else {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute("download", "Документы.zip");
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
-      }
+        
     } catch (err) {
       alert("В ходе генерации возникла ошибка.");
     } finally {
