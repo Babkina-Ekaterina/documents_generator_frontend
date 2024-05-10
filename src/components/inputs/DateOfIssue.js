@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { Calendar } from 'primereact/calendar';
 
 function DateOfIssue({ index, dateOfIssue, onChange }) {
-    const [selectedDate, setSelectedDate] = useState(dateOfIssue);
+    const dobParts = dateOfIssue.split('.');
+    const year = parseInt(dobParts[2], 10);
+    const month = parseInt(dobParts[1], 10) - 1;
+    const day = parseInt(dobParts[0], 10);
+    const dobDate = new Date(year, month, day);
+
+    const [selectedDate, setSelectedDate] = useState(dobDate);
 
     const formatDate = (date) => {
         if (date) {
