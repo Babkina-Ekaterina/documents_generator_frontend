@@ -10,10 +10,10 @@ import DateOfIssue from '../inputs/DateOfIssue';
 import Description from '../inputs/Description';
 import NameType from '../inputs/NameType';
 
-const AuthorForm = ({ index, author, onChange }) => {
+const AuthorFieldset = ({ index, author, onChange }) => {
   const handleInputChange = (event) => {    
     const { name, value } = event.target;
-    if (name == index) {
+    if (name === index) {
       onChange(index, "selectedNameOption", value);
     }
     onChange(index, name, value);
@@ -38,4 +38,4 @@ const AuthorForm = ({ index, author, onChange }) => {
   );
 }
 
-export default AuthorForm;
+export default AuthorFieldset;
