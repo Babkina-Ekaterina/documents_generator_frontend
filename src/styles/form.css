@@ -19,7 +19,7 @@ form {
   border-radius: 8px;
 }
 
-h1,
+h1, h2,
 h3 {
   margin: 0 0 30px 0;
   text-align: center;
@@ -27,6 +27,7 @@ h3 {
 
 input[type="text"],
 input[type="number"],
+input[type="password"],
 textarea,
 select {
   font-family: 'Nunito', sans-serif;
@@ -44,6 +45,7 @@ select {
 
 input[type="text"]:focus,
 input[type="number"]:focus,
+input[type="password"]:focus,
 textarea:focus,
 select:focus {
   outline: 3px solid rgb(140, 177, 212);
@@ -68,6 +70,7 @@ button {
   box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
   margin-bottom: 10px;
   transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
 button:hover {
@@ -80,6 +83,7 @@ button:active {
 
 button:disabled {
   background-color: #384047;
+  cursor: default;
 }
 
 .author {
@@ -87,6 +91,21 @@ button:disabled {
   margin: 0 auto;
   margin-bottom: 15px;
   display: block;
+}
+
+.password {
+  font-size: 16px;
+  height: auto;
+  width: 25%;
+  margin-bottom: 30px;
+  margin-left: 20px;
+}
+
+.header_button {
+  width: auto;
+  margin: 0 10px;
+  display: inline;
+  padding: 10px 20px;
 }
 
 .files {
@@ -291,4 +310,89 @@ ul {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end; /* Изменено на space-between */
+  align-items: center;
+  background-color: #f4f7f8;
+  color: #000000;
+  padding: 10px;
+}
+
+.login_or_register {
+  font-size: 20px;
+  color: rgb(100, 137, 172);
+}
+
+.modal_background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_container {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal_buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.modal_buttons button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal_buttons button.yes {
+  background-color: #64b367;
+  color: white;
+}
+
+.modal_buttons button.cancel {
+  background-color: #e44438;
+  color: white;
+}
+
+.modal_buttons button.yes:hover {
+  background-color: #498b4b;
+}
+
+.modal_buttons button.yes:active {
+  background-color: #366938;
+}
+
+.modal_buttons button.cancel:hover {
+  background-color: #b6342b;
+}
+
+.modal_buttons button.cancel:active {
+  background-color: #97271f;
+}
+
+.modal_buttons button.yes:disabled {
+  background-color: #384047;
+  cursor: default;
+}
+
+.modal_buttons button.cancel:disabled {
+  background-color: #384047;
+  cursor: default;
 }
