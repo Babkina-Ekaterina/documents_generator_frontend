@@ -8,11 +8,12 @@ import Faculty from '../inputs/Faculty';
 import FullAuthors from '../inputs/FullAutors';
 import Reason from '../inputs/Reason';
 import ProgramType from '../inputs/ProgramType';
-import AuthorForm from '../fieldsets/AuthorFieldset';
+import AuthorFieldset from '../fieldsets/AuthorFieldset';
 import ProgramFiles from '../inputs/ProgramFiles';
 import Format from '../inputs/Format';
+import Modal from '../modals/Modal';
 
-function GeneratorForm() {
+const GeneratorForm = ({ name, address, series, number, dateOfIssue, citizenship, dateOfBirth, issuedBy }) => {
   const [programName, setProgramName] = useState("");
   const [annotation, setAnnotation] = useState("");
   const [language, setLanguage] = useState("");
@@ -25,17 +26,57 @@ function GeneratorForm() {
   const [programFiles, setProgramFiles] = useState([]);
 
   const [authors, setAuthors] = useState([{
-    name: "", address: "",
-    series: "", number: "", dateOfIssue: "", citizenship: "",
-    dateOfBirth: "", issuedBy: "", description: "", selectedNameOption: "name"
+    name: name, address: address,
+    series: series, number: number, dateOfIssue: dateOfIssue, citizenship: citizenship,
+    dateOfBirth: dateOfBirth, issuedBy: issuedBy, description: "", selectedNameOption: "name"
   }]);
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const [showConfirmationEdit, setShowConfirmationEdit] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
+
+  const handleEdit = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    document.body.style.cursor = "wait";
+    try {
+      const firstAuthor = authors[0];
+      const authorId = localStorage.getItem("authorId");
+
+      await axios.post(process.env.REACT_APP_SERVER_URL + "/author/edit?authorId=" + authorId,
+        {
+          name: firstAuthor.name,
+          dateOfBirth: firstAuthor.dateOfBirth,
+          address: firstAuthor.address,
+          citizenship: firstAuthor.citizenship,
+          series: firstAuthor.series,
+          number: firstAuthor.number,
+          dateOfIssue: firstAuthor.dateOfIssue,
+          issuedBy: firstAuthor.issuedBy
+        },
+        {
+          auth: {
+            username: process.env.REACT_APP_USERNAME,
+            password: process.env.REACT_APP_PASSWORD
+          }
+        }
+      );
+
+      setShowConfirmationEdit(false);
+      window.location.reload();
+    } catch (err) {
+      alert("В ходе изменения данных возникла ошибка.");
+    } finally {
+      document.body.style.cursor = "default";
+      setIsLoading(false);
+    }
+  };
+
   const save = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    document.body.style.cursor = 'wait';
+    document.body.style.cursor = "wait";
     try {
       const formData = new FormData();
       formData.append('userDataDto', JSON.stringify({
@@ -72,7 +113,7 @@ function GeneratorForm() {
         setIsLoading(false);
         return;
       }
-      
+
       if (programFiles.length === 0) {
         programFiles.push(new File([], "empty_file.txt", { type: "text/plain" }));
       }
@@ -81,7 +122,7 @@ function GeneratorForm() {
         formData.append("programFiles", programFile);
       });
 
-      const response = await axios.post(process.env.REACT_APP_SERVER_URL,
+      const response = await axios.post(process.env.REACT_APP_SERVER_URL + "/documents/generate",
         formData,
         {
           headers: {
@@ -91,24 +132,34 @@ function GeneratorForm() {
             username: process.env.REACT_APP_USERNAME,
             password: process.env.REACT_APP_PASSWORD
           },
-          responseType: 'blob'
+          responseType: "blob"
         });
 
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute("download", "Документы.zip");
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "Документы.zip");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
 
+      if (isEdited) {
+        handleShowConfirmationEdit();
+      }
     } catch (err) {
       alert("В ходе генерации возникла ошибка.");
     } finally {
-      document.body.style.cursor = 'default';
+      document.body.style.cursor = "default";
       setIsLoading(false);
     }
+  };
+
+  const handleShowConfirmationEdit = () => {
+    setShowConfirmationEdit(true);
+  };
+  const handleHideConfirmationEdit = () => {
+    setShowConfirmationEdit(false);
   };
 
 
@@ -137,6 +188,9 @@ function GeneratorForm() {
     const newAuthors = [...authors];
     newAuthors[index][fieldName] = value;
     setAuthors(newAuthors);
+    if (index === 0 && fieldName !== "description" && fieldName !== "selectedNameOption") {
+      setIsEdited(true);
+    }
   };
 
   const handleProgramNameChange = (event) => {
@@ -177,10 +231,16 @@ function GeneratorForm() {
 
         <h1>Генерация документов для отдела защиты интеллектуальной собственности ВГУ</h1>
 
+        {localStorage.getItem("isAuthorized") !== process.env.REACT_APP_IS_AUTH && (
+          <h2 style={{ color: "rgb(100, 137, 172)" }}>
+            Создайте профиль или войдите в существующий, чтобы сохранить данные для повторного автоматического заполнения формы.
+          </h2>
+        )}
+
         <h3>Данный генератор документов призван устранить ручное заполнение документов, снизить вероятность ошибок,
           ускорить процесс согласования документов и улучшить общую эффективность отдела защиты интеллектуальной собственности.</h3>
         <h3>С помощью данного генератора можно получить следующие документы:
-          <div style={{ textAlign: 'center' }}>
+          <div style={{ textAlign: "center" }}>
 
             <div className="file">&#8226; Листинг;</div>
             <div className="file">&#8226; Реферат;</div>
@@ -213,7 +273,7 @@ function GeneratorForm() {
           <button type="button" className="author" onClick={addAuthor}>Добавить автора</button>
           <button type="button" className="author" onClick={deleteAuthor}>Удалить автора</button>
           {authors.map((author, index) => (
-            <AuthorForm
+            <AuthorFieldset
               key={index}
               index={index}
               author={author}
@@ -232,6 +292,18 @@ function GeneratorForm() {
 
         <button disabled={isLoading} type="submit">Сгенерировать документы</button>
       </form>
+
+      {showConfirmationEdit && (
+        <Modal>
+          <div className="modal_container">
+            <h3>Вы хотите изменить данные в профиле?</h3>
+            <div className="modal_buttons">
+              <button className="yes" disabled={isLoading} onClick={handleEdit}>Да</button>
+              <button className="cancel" disabled={isLoading} onClick={handleHideConfirmationEdit}>Отмена</button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
