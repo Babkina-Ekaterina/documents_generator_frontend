@@ -188,7 +188,9 @@ const GeneratorForm = ({ name, address, series, number, dateOfIssue, citizenship
     const newAuthors = [...authors];
     newAuthors[index][fieldName] = value;
     setAuthors(newAuthors);
-    if (index === 0 && fieldName !== "description" && fieldName !== "selectedNameOption") {
+    const isAuthorized = localStorage.getItem("isAuthorized");
+    if (isAuthorized === process.env.REACT_APP_IS_AUTH && index === 0 && 
+      fieldName !== "description" && fieldName !== "selectedNameOption") {
       setIsEdited(true);
     }
   };

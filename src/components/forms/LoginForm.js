@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Login from '../inputs/Login';
 import Password from '../inputs/Password';
 
-const RegisterForm = () => {
+const LoginForm = () => {
     const navigate = useNavigate();
 
     const [login, setLogin] = useState("");
@@ -78,4 +78,4 @@ const RegisterForm = () => {
     );
 };
 
-export default RegisterForm;
+export default LoginForm;
