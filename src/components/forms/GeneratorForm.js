@@ -13,7 +13,7 @@ import ProgramFiles from '../inputs/ProgramFiles';
 import Format from '../inputs/Format';
 import Modal from '../modals/Modal';
 
-const GeneratorForm = ({ name, address, series, number, dateOfIssue, citizenship, dateOfBirth, issuedBy }) => {
+const GeneratorForm = ({ name, address, series, number, dateOfIssue, citizenship, dateOfBirth, issuedBy, departmentCode }) => {
   const [programName, setProgramName] = useState("");
   const [annotation, setAnnotation] = useState("");
   const [language, setLanguage] = useState("");
@@ -28,7 +28,7 @@ const GeneratorForm = ({ name, address, series, number, dateOfIssue, citizenship
   const [authors, setAuthors] = useState([{
     name: name, address: address,
     series: series, number: number, dateOfIssue: dateOfIssue, citizenship: citizenship,
-    dateOfBirth: dateOfBirth, issuedBy: issuedBy, description: "", selectedNameOption: "name"
+    dateOfBirth: dateOfBirth, issuedBy: issuedBy, departmentCode: departmentCode, description: "", selectedNameOption: "name"
   }]);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -53,7 +53,8 @@ const GeneratorForm = ({ name, address, series, number, dateOfIssue, citizenship
           series: firstAuthor.series,
           number: firstAuthor.number,
           dateOfIssue: firstAuthor.dateOfIssue,
-          issuedBy: firstAuthor.issuedBy
+          issuedBy: firstAuthor.issuedBy,
+          departmentCode: firstAuthor.departmentCode
         },
         {
           auth: {
@@ -87,6 +88,7 @@ const GeneratorForm = ({ name, address, series, number, dateOfIssue, citizenship
         numbers: authors.map(author => author.number),
         datesOfIssue: authors.map(author => author.dateOfIssue),
         issuedBys: authors.map(author => author.issuedBy),
+        departmentCodes: authors.map(author => author.departmentCode),
         datesOfBirth: authors.map(author => author.dateOfBirth),
         citizenships: authors.map(author => author.citizenship),
         descriptions: authors.map(author => author.description),
@@ -168,7 +170,7 @@ const GeneratorForm = ({ name, address, series, number, dateOfIssue, citizenship
       setAuthors([...authors, {
         name: "", address: "",
         series: "", number: "", dateOfIssue: "", citizenship: "",
-        dateOfBirth: "", issuedBy: "", description: "", selectedNameOption: "name"
+        dateOfBirth: "", issuedBy: "", departmentCode: "", description: "", selectedNameOption: "name"
       }]);
     } else {
       alert("Достигнуто максимальное количество авторов.");

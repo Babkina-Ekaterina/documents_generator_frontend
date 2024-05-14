@@ -9,6 +9,7 @@ import Citizenship from '../inputs/Citizenship';
 import DateOfIssue from '../inputs/DateOfIssue';
 import Description from '../inputs/Description';
 import NameType from '../inputs/NameType';
+import DepartmentCode from '../inputs/DepartmentCode';
 
 const AuthorFieldset = ({ index, author, onChange }) => {
   const handleInputChange = (event) => {    
@@ -31,6 +32,7 @@ const AuthorFieldset = ({ index, author, onChange }) => {
         <Number index={index} number={author.number} onChange={handleInputChange} />
         <DateOfIssue index={index} dateOfIssue={author.dateOfIssue} onChange={handleInputChange} />
         <IssuedBy index={index} issuedBy={author.issuedBy} onChange={handleInputChange} />
+        <DepartmentCode index={index} departmentCode={author.departmentCode} onChange={handleInputChange} />
         <Description index={index} description={author.description} onChange={handleInputChange} />
         <NameType index={index} selectedNameOption={author.selectedNameOption} onChange={handleInputChange} />
       </div>

@@ -15,6 +15,7 @@ function GeneratorPage() {
     const [citizenship, setCitizenship] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
     const [issuedBy, setIssuedBy] = useState("");
+    const [departmentCode, setDepartmentCode] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -42,6 +43,7 @@ function GeneratorPage() {
                     setCitizenship(authorData.citizenship);
                     setDateOfBirth(authorData.dateOfBirth);
                     setIssuedBy(authorData.issuedBy);
+                    setDepartmentCode(authorData.departmentCode);
 
                     const words = authorData.name.split(" ");
                     if (words.length === 3) {
@@ -55,6 +57,7 @@ function GeneratorPage() {
                     }
                 } catch (err) {
                     alert("Ошибка при получении данных профиля.");
+                    handleLogout();
                 } finally {
                     setIsLoading(false);
                 }
@@ -78,6 +81,7 @@ function GeneratorPage() {
         setCitizenship("");
         setDateOfBirth("");
         setIssuedBy("");
+        setDepartmentCode("");
         window.location.reload();
     };
 
@@ -99,6 +103,7 @@ function GeneratorPage() {
                         citizenship={citizenship}
                         dateOfBirth={dateOfBirth}
                         issuedBy={issuedBy}
+                        departmentCode={departmentCode}
                     />
                 </div>
             )}

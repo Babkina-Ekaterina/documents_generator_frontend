@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Login from '../inputs/Login';
 import Password from '../inputs/Password';
 import validator from 'validator';
+import DepartmentCode from '../inputs/DepartmentCode';
 
 const RegisterForm = () => {
     const navigate = useNavigate();
@@ -27,6 +28,7 @@ const RegisterForm = () => {
     const [citizenship, setCitizenship] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
     const [issuedBy, setIssuedBy] = useState("");
+    const [departmentCode, setDepartmentCode] = useState("");
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -42,7 +44,7 @@ const RegisterForm = () => {
             try {
                 await axios.post(process.env.REACT_APP_SERVER_URL + "/author/register",
                     {
-                        login, password, name, dateOfBirth, address, citizenship, series, number, dateOfIssue, issuedBy
+                        login, password, name, dateOfBirth, address, citizenship, series, number, dateOfIssue, issuedBy, departmentCode
                     },
                     {
                         auth: {
@@ -55,7 +57,7 @@ const RegisterForm = () => {
 
             } catch (err) {
                 if (err.code === AxiosError.ERR_NETWORK) {
-                    alert("Ошибка сервера");
+                    alert("Ошибка сервера.");
                 } else if (err.response.status === 400) {
                     alert("Данный логин занят. Придумайте другой.");
                 } else {
@@ -92,6 +94,9 @@ const RegisterForm = () => {
     };
     const handleIssuedByChange = (event) => {
         setIssuedBy(event.target.value);
+    };
+    const handleDepartmentCodeChange = (event) => {
+        setDepartmentCode(event.target.value);
     };
     const handleLoginChange = (event) => {
         setLogin(event.target.value);
@@ -137,6 +142,7 @@ const RegisterForm = () => {
                 <Number number={number} onChange={handleNumberChange} />
                 <DateOfIssue dateOfIssue={dateOfIssue} onChange={handleDateOfIssueChange} />
                 <IssuedBy issuedBy={issuedBy} onChange={handleIssuedByChange} />
+                <DepartmentCode departmentCode={departmentCode} onChange={handleDepartmentCodeChange} />
 
                 <button disabled={isLoading} type="submit">Зарегистрироваться</button>
 
