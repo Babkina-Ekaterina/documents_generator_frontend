@@ -36,7 +36,7 @@ const LoginForm = () => {
 
         } catch (err) {
             if (err.code === AxiosError.ERR_NETWORK) {
-                alert("Ошибка сервера");
+                alert("Ошибка сервера.");
             } else if (err.response.status === 400) {
                 alert("Неверный логин или пароль.");
             } else {

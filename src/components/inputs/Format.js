@@ -2,7 +2,7 @@ import React from 'react';
 
 function Format({ format, onChange }) {
     const formats = ["DOCX (Microsoft Word)",
-        "ODT (OpenOffice Writer)"];
+        "ODT (OpenOffice Writer, LibreOffice Writer)"];
 
     return (
         <div>
